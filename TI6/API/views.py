@@ -1,7 +1,5 @@
-from functools import partial
-from django.shortcuts import render
 from API.serializers import MamografiaSerializer
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
@@ -33,7 +31,7 @@ def mamografia_list_or_add(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST', 'PUT', 'PATCH'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 def mamografia_detail(request, pk):
     try:
         id = ObjectIdMapper.to_internal_value(pk)
@@ -46,17 +44,6 @@ def mamografia_detail(request, pk):
         serializer = MamografiaSerializer(mamografia)
 
         return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = Mamografia(mamografia, data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-
-            return JsonResponse(serializer.data)
-
-        return JsonResponse(serializer.errors, status=400)
 
     elif request.method == 'PATCH':
         data = JSONParser().parse(request)
