@@ -23,6 +23,8 @@ def mamografia_list_or_add(request):
             mamografias = Mamografia.objects.filter(rotulo__contains='.' + searchFilter + '.')
             serializer = MamografiaSerializer(mamografias, many=True)
         else:
+            print("achei nada")
+
             return Response([])
 
             mamografias = Mamografia.objects.all()
