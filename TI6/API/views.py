@@ -17,8 +17,16 @@ class MamografiaViewSet(viewsets.ModelViewSet):
 @api_view(['GET', 'POST'])
 def mamografia_list_or_add(request):
     if request.method == 'GET':
-        mamografias = Mamografia.objects.all()
-        serializer = MamografiaSerializer(mamografias, many=True)
+        searchFilter = request.GET.get('rotulo')
+
+        if searchFilter != None:
+            mamografias = Mamografia.objects.get(rotulo=searchFilter)
+            serializer = MamografiaSerializer(mamografias, many=True)
+        else:
+            return Response([])
+
+            mamografias = Mamografia.objects.all()
+            serializer = MamografiaSerializer(mamografias, many=True)
 
         return Response(serializer.data)
 
