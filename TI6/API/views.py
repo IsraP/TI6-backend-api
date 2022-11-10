@@ -20,7 +20,7 @@ def mamografia_list_or_add(request):
         searchFilter = request.GET.get('rotulo')
 
         if searchFilter != None:
-            mamografias = Mamografia.objects.get(rotulo=searchFilter)
+            mamografias = Mamografia.objects.filter(rotulo__contains='.' + searchFilter + '.')
             serializer = MamografiaSerializer(mamografias, many=True)
         else:
             return Response([])
