@@ -40,7 +40,7 @@ def mamografia_list_or_add(request):
 
 @api_view(['GET'])
 def get_all_non_processed(request):
-    mamografias = Mamografia.objects.filter(processado=False)
+    mamografias = Mamografia.objects.filter(processado__exact=False)
     serializer = MamografiaSerializer(mamografias, many=True)
 
     return Response(serializer.data)
