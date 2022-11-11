@@ -37,6 +37,15 @@ def mamografia_list_or_add(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def get_all_non_processed(request):
+    mamografias = Mamografia.objects.filter(processado=False)
+    serializer = MamografiaSerializer(mamografias, many=True)
+
+    return Response(serializer.data)
+
+
 @api_view(['GET', 'PATCH', 'DELETE'])
 def mamografia_detail(request, pk):
     try:

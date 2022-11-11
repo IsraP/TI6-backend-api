@@ -10,5 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path("mamografias/", views.mamografia_list_or_add),
+    path("mamografias/nprocessed", views.get_all_non_processed),
     path("mamografias/<str:pk>/", views.mamografia_detail)
 ]
